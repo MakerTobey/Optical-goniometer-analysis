@@ -37,6 +37,6 @@ yTick = 300:100:700;
 Title = ''; % this is supposed to stay empty!
 SaveName = strcat('pair',num2str(PairNr),'_scan_',num2str(i), '_', FlowerName,'_angle_',num2str(flowerscan.sampleangle(1)));
 
-NicePPlotNoInterval(xAxis, yAxis, data', cLims, xLabel, yLabel, zLabel, xTick, yTick, xTickLabel, Title, SaveName)
+NicePPlot(xAxis, yAxis, data', cLims, xLabel, yLabel, zLabel, xTick, yTick, xTickLabel, Title, SaveName)
 
 end
