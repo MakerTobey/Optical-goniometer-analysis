@@ -2,6 +2,7 @@ function NiceReceptorPlotComparisonCoarse(IntRef, IntSpec, xAxis, xLabel, yLabel
 %(xAxis, Data1D1, Data1D2, Data1D3, Data1D4, xLim, yLim, xLabel, yLabel, Legend, SaveName)
 % make a publishable plot and save
 
+
 %% Common variables
 
 FontSize = 12;
@@ -29,33 +30,28 @@ hfig = figure(1); clf;
 
 % --- dimensions and position of plot 
 hsp = subplot(1,1,1, 'Parent', hfig);
-% % set(hsp,'Position',[0.15 0.17 0.75 0.80]);
-
 
 %% plot
-% set(0,'defaultAxesColorOrder','remove')
-DefaultColours = get(groot,'DefaultAxesColorOrder'); %does not equal: Colours = parula(6);!
+
+% define colours for plot tracks:
+DefaultColours = get(groot,'DefaultAxesColorOrder'); % Get from default (parula) colours. Note: this notation does not equal Colours = parula(6);!
 DarkBlue = DefaultColours(1,:);
-% LightBlue = DefaultColours(6,:);
-% LightGreen = DefaultColours(5,:);
 Purple = DefaultColours(4,:);
+LightPastelPurple = [0.690000 0.610000 0.850000];
+LightSkyBlue = [0.530000 0.810000 0.980000];
+LightGreen = [0.560000 0.930000 0.560000];
+DarkPastelGreen = [0.010000 0.750000 0.240000];
 
-% import additional colours: @cmu.colors;
-% colors('dark green')
-% colors('android green')
-
-%,'m' 'm--'%,'g''g:'%,'k-.'
-%'MarkerEdgeColor','b',
-%'--s','--o','--^'
+% define markers and lines
 MSize = 3;
 MSizesmall = 2.5;
 LineWidth = 2;
 
-plot(xAxis,IntRef.u,':o','color',colors('light pastel purple'),'Linewidth',LineWidth,...
+plot(xAxis,IntRef.u,':o','color',LightPastelPurple,'Linewidth',LineWidth,...
     'MarkerSize',MSizesmall,'MarkerFaceColor',[1 1 1]); hold on
-plot(xAxis,IntRef.b,':o','color',colors('light sky blue'),'Linewidth',LineWidth,...
+plot(xAxis,IntRef.b,':o','color',LightSkyBlue,'Linewidth',LineWidth,...
     'MarkerSize',MSizesmall,'MarkerFaceColor',[1 1 1]);
-plot(xAxis,IntRef.g,':o','color',colors('light green'),'Linewidth',LineWidth,...
+plot(xAxis,IntRef.g,':o','color',LightGreen,'Linewidth',LineWidth,...
     'MarkerSize',MSizesmall,'MarkerFaceColor',[1 1 1]);
 
 plot(xAxis,IntSpec.u,'-o','color',Purple,'Linewidth',LineWidth,...
@@ -63,17 +59,7 @@ plot(xAxis,IntSpec.u,'-o','color',Purple,'Linewidth',LineWidth,...
 plot(xAxis,IntSpec.b,'-o','color',DarkBlue,'Linewidth',LineWidth,...
     'MarkerSize',MSize,'MarkerFaceColor',DarkBlue );
 plot(xAxis,IntSpec.g,'-o','color',colors('dark pastel green'),'Linewidth',LineWidth,...
-    'MarkerSize',MSize,'MarkerFaceColor',colors('dark pastel green') );
-
-
-
-% %default colours:
-% plot(xAxis,IntRef.u,'Linewidth',2); hold on %,'m' 'm--'%,'g''g:'%,'k-.'
-% plot(xAxis,IntRef.b,'Linewidth',2);
-% plot(xAxis,IntRef.g,'Linewidth',2);
-% plot(xAxis,IntSpec.u,'Linewidth',2);
-% plot(xAxis,IntSpec.b,'Linewidth',2);
-% plot(xAxis,IntSpec.g,'Linewidth',2);
+    'MarkerSize',MSize,'MarkerFaceColor',DarkPastelGreen );
 
 
 %% axis scales
@@ -134,8 +120,7 @@ SaveDir = '';
 if (doExportPlot)
     IMAGENAME = [SaveDir SaveName]; 
     print(hfig, ['-r' num2str(400)], [IMAGENAME '.jpg' ], ['-d' 'jpeg']);
-%     print(hfig, ['-r' num2str(400)], [IMAGENAME '.svg' ], ['-d' 'svg']);  
-%     crop([IMAGENAME '.png']);
+    print(hfig, ['-r' num2str(400)], [IMAGENAME '.svg' ], ['-d' 'svg']);  
     display('finished plot export')
 end
 
