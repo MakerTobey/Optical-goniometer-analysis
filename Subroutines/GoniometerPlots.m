@@ -1,16 +1,10 @@
-function GoniometerPlotsMNoInterval3(flowerscan,i, FlowerName, decreaseFact0Order, plottedAnglularRange, plottedWLRange,  CLimsManual, PairNr)
+function GoniometerPlots(flowerscan,i, FlowerName, decreaseFact0Order, plottedAnglularRange, plottedWLRange,  CLimsManual, PairNr)
 % Make "Goniometer" plots
 % crop, assign, plot
 
 data = flowerscan.spec';
 theta = flowerscan.detectorangle -(flowerscan.sampleangle(1) *2);
 lambda = flowerscan.wl(:,1);
-
-
-%% Smooth data with a span of 7% of the data points
-% AA = mslowess(lambda*1E9,ReflAv','Order', 0, 'Span', 0.15, 'Kernel', 'linear');
-%%%%CHANGED%%%%
-% AA = %mslowess(theta,ReflAv,'Order', 2, 'Span', 0.05, 'Kernel', 'gaussian');
 
 
 %% Reduce specular reflection intensity X-fold
@@ -30,20 +24,19 @@ lambda(not(lambdaRegion)) = [];
 
 
 %% make "gonimeter" plots
-xAxis = cosd(theta+270); % theta; %Decide on scaling of angular axsis: theta or cosd(thetaC+270) 
+xAxis = cosd(theta+270); %Decide on scaling of angular axsis: theta or cosd(thetaC+270) 
 yAxis = lambda;
 % data = data;
-cLims = [0 CLimsManual(i)]; %flowerscan.clim %cLims = [0 1.5E-4]; % set colour scale limits  %[0 0.9E-4];
+cLims = [0 CLimsManual(i)]; % set colour scale limits
 yLabel = 'wavelength (nm)';
 xLabel = 'scattering angle (degree)'; %'cos of scattering angle';
 zLabel = 'intensity';
 xTick = cosd((-90:10:90)+270); % -60:30:60;
 xTickLabel = {'' '' -70 '' '' -40 '' -20 -10 0 10 20 '' 40 '' '' 70 '' ''}; % or leave emty: []
 yTick = 300:100:700;
-Title = ''; % this is supposed to stay empty!! %[plotname ' far field propagation ' num2str(m)];
+Title = ''; % this is supposed to stay empty!
 SaveName = strcat('pair',num2str(PairNr),'_scan_',num2str(i), '_', FlowerName,'_angle_',num2str(flowerscan.sampleangle(1)));
 
 NicePPlotNoInterval(xAxis, yAxis, data', cLims, xLabel, yLabel, zLabel, xTick, yTick, xTickLabel, Title, SaveName)
-% NicePPlotNoIntervalNoAxis
 
 end
