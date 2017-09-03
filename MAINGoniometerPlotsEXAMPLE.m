@@ -2,7 +2,7 @@
 
 %%%%%%% load data %%%%%%%
 % addpath('C:\Users\tw347\ownCloud\FLOWERS'); % repository of the data file, if not identical with folder of this script
-load('scan170503PeonQOTN.mat'); % loar matlab data file
+load('scan170503PeonQOTN.mat'); % load matlab data file
 
 %%%%%%% data type %%%%%%%
 FlowerName = 'Peonia'; % used for plots
@@ -13,9 +13,9 @@ pairs = [[44 49];[54 59];[35 50];[55 60];[43 48];[53 58];[46 51];[56 61];[47 52]
 % Both datasets must have the same angular range.
 
 %%% settings
-plottedAnglularRange = [-60 60]; % graph plotted between the angles, if the data is available
+plottedAnglularRange = [-60 60]; % graph plotted between the angles if the data is available
 plottedWLRange = [299 702]; % range of wavelengths plotted
-addpath(Subroutines);
+addpath(Subroutines); % include the folder "Subroutines" with custom functions and scripts
 
 
 %% Make "Goniometer" plot (for each measurement)
@@ -44,7 +44,7 @@ CLimsManual(pairs(8,:)) = 0.30;
 % plot for each selected measurement
 for i = Selection';
     [PairNr,~] = find(pairs==i); % determine which pair is currently run (for file name)
-    GoniometerPlotsMNoInterval3(scan(i),i, FlowerName, 1, plottedAnglularRange, plottedWLRange, CLimsManual, PairNr);
+    GoniometerPlots(scan(i),i, FlowerName, 1, plottedAnglularRange, plottedWLRange, CLimsManual, PairNr);
 end
 
        
@@ -61,10 +61,10 @@ for n = 1:length(pairs) % selection, pair by pair
     dataRef = scan(PairN(2)).spec' *CLimsManual(PairN(1));
     dataSpec = scan(PairN(1)).spec' *CLimsManual(PairN(1));
     lambda = scan(PairN(1)).wl(:,1);
-    theta = scan(PairN(1)).detectorangle -(scan(PairN(1)).sampleangle(1) *2);
+    theta = scan(PairN(1)).detectorangle -(scan(PairN(1)).sampleangle(1) *2); % set direct surface reflection angle to zero
     
-    plotname = strcat('pair',num2str(n),'_scan_',num2str(PairN(1)),'_angle_',num2str(scan(PairN(1)).sampleangle(1)));
+    plotname = strcat('pair',num2str(n),'_scan_',num2str(PairN(1)),'_angle_',num2str(scan(PairN(1)).sampleangle(1))); % include dataset characteristics into filename
     
     %plot
-    AllSpectralPlots2Receptors(dataRef, dataSpec, theta, lambda, plotname, thetastep, scan(PairN(1)).sampleangle(1), plottedAnglularRange);
+    AllSpectralPlotsReceptors(dataRef, dataSpec, theta, lambda, plotname, thetastep, scan(PairN(1)).sampleangle(1), plottedAnglularRange);
 end
