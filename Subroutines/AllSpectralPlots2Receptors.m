@@ -1,4 +1,4 @@
-function AllSpectralPlots2Receptors(dataRef , dataSpec, theta, lambdaSpec, plotname, LIntv, sampleangle, plottedAnglularRange)
+function AllSpectralPlotsReceptors(dataRef , dataSpec, theta, lambdaSpec, plotname, LIntv, sampleangle, plottedAnglularRange)
 % Make one overall plot each (max. averaging)
 
 load BeeEyeSpectra % load bee-eye receptor values
