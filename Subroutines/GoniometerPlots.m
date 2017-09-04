@@ -1,15 +1,10 @@
-function GoniometerPlots(flowerscan,i, FlowerName, decreaseFact0Order, plottedAnglularRange, plottedWLRange,  CLimsManual, PairNr)
+function GoniometerPlots(flowerscan,i, plottedAnglularRange, plottedWLRange,  CLimsManual, PairNr)
 % Make "Goniometer" plots
 % crop, assign, plot
 
-data = flowerscan.spec';
-theta = flowerscan.detectorangle -(flowerscan.sampleangle(1) *2);
-lambda = flowerscan.wl(:,1);
-
-
-%% Reduce specular reflection intensity X-fold
-thetaSpecular = ((theta<=3)&(theta>=-3));
-data(thetaSpecular,:) = data(thetaSpecular,:)/decreaseFact0Order;
+data = flowerscan.thedata.spec';
+theta = flowerscan.thedata.detectorangle -(flowerscan.thedata.sampleangle(1) *2);
+lambda = flowerscan.thedata.wl(:,1);
 
 
 %% Reduce size of matrix to exclude sparsely sampled areas
@@ -28,14 +23,14 @@ xAxis = cosd(theta+270); %Decide on scaling of angular axsis: theta or cosd(thet
 yAxis = lambda;
 % data = data;
 cLims = [0 CLimsManual(i)]; % set colour scale limits
-yLabel = 'wavelength (nm)';
-xLabel = 'scattering angle (degree)'; %'cos of scattering angle';
-zLabel = 'intensity';
+yLabel = 'Wavelength (nm)';
+xLabel = 'Scattering angle (degree)'; %'cos of scattering angle';
+zLabel = 'Intensity';
 xTick = cosd((-90:10:90)+270); % -60:30:60;
 xTickLabel = {'' '' -70 '' '' -40 '' -20 -10 0 10 20 '' 40 '' '' 70 '' ''}; % or leave emty: []
 yTick = 300:100:700;
 Title = ''; % this is supposed to stay empty!
-SaveName = strcat('pair',num2str(PairNr),'_scan_',num2str(i), '_', FlowerName,'_angle_',num2str(flowerscan.sampleangle(1)));
+SaveName = strcat('pair',num2str(PairNr),'_scan_',num2str(i), '_', flowerscan.name,'_angle_',num2str(flowerscan.thedata.sampleangle(1)));
 
 NicePPlot(xAxis, yAxis, data', cLims, xLabel, yLabel, zLabel, xTick, yTick, xTickLabel, Title, SaveName)
 
